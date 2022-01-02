@@ -1,0 +1,10 @@
+# função open() - r: read | w: write | a: append | b: binary
+arquivo = open('palavras.txt', 'w')
+arquivo.write('banana\n')
+arquivo.write('maca\n')
+arquivo.write('laranja\n')
+arquivo.write('melancia\n')
+arquivo.write('manga\n')
+arquivo.write('abacate\n')
+arquivo.write('abacaxi\n')
+arquivo.close()
