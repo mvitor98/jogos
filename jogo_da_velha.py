@@ -73,7 +73,7 @@ def winner_row(matrix):
     win = None
     lose = None
     countX_r0 = 0
-    CountO_r0 = 0
+    countO_r0 = 0
     countX_r1 = 0
     countO_r1 = 0
     countX_r2 = 0
@@ -100,7 +100,7 @@ def winner_row(matrix):
     if countX_r0 == 3 or countX_r1 == 3 or countX_r2 == 3:
         win = 'win'
         return win
-    elif countX_r0 == 3 or countX_r1 == 3 or countX_r2 == 3:
+    elif countO_r0 == 3 or countO_r1 == 3 or countO_r2 == 3:
         lose = 'lose'
         return lose
 
