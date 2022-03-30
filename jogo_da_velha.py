@@ -13,66 +13,110 @@ def show_matrix(matrix):
 
 # para o jogador
 def winner_diagonal(matrix):
-    win = False
+    win = None
+    lose = None
     if matrix[0][0] == ' X ' and matrix[1][1] == ' X ' and matrix[2][2] == ' X ':
-        win = True
+        win = 'win'
         print('d1')
+        return win
 
     if matrix[0][2] == ' X ' and matrix[1][1] == ' X ' and matrix[2][0] == ' X ':
-        win = True
+        win = 'win'
         print('d2')
+        return win
 
-    return win
+    if matrix[0][0] == ' O ' and matrix[1][1] == ' O ' and matrix[2][2] == ' O ':
+        lose = 'lose'
+        print('d1')
+        return lose
+        
+    
+    if matrix[0][2] == ' O ' and matrix[1][1] == ' O ' and matrix[2][0] == ' O ':
+        lose = 'lose'
+        print('d2')
+        return lose
 
 def winner_colum(matrix):
-    win = False
+    win = None
+    lose = None
     if matrix[0][0] == ' X ' and matrix[1][0] == ' X ' and matrix[2][0] == ' X ':
-        win = True
+        win = 'win'
         print('c1')
-
+        return win
+    
     if matrix[0][1] == ' X ' and matrix[1][1] == ' X ' and matrix[2][1] == ' X ':
-        win = True
+        win = 'win'
         print('c2')
+        return win
 
     if matrix[0][2] == ' X ' and matrix[1][2] == ' X ' and matrix[2][2] == ' X ':
-        win = True
+        win = 'win'
         print('c3')
+        return win
+
+    if matrix[0][0] == ' O ' and matrix[1][0] == ' O ' and matrix[2][0] == ' O ':
+        lose = 'lose'        
+        print('c1')
+        return lose
     
-    return win
+    if matrix[0][1] == ' O ' and matrix[1][1] == ' O ' and matrix[2][1] == ' O ':
+        lose = 'lose'
+        print('c2')
+        return lose
+
+    if matrix[0][2] == ' O ' and matrix[1][2] == ' O ' and matrix[2][2] == ' O ':
+        lose = True
+        print('c3')
+        return lose
 
 def winner_row(matrix):
-    win = False
-    count_r0 = 0
-    count_r1 = 0
-    count_r2 = 0
+    win = None
+    lose = None
+    countX_r0 = 0
+    CountO_r0 = 0
+    countX_r1 = 0
+    countO_r1 = 0
+    countX_r2 = 0
+    countO_r2 = 0
     
-    for r in matrix[0]:
-        for c in r:
-            if c == ' X ':
-                count_r0 += 1
-    
-    for r in matrix[1]:
-        for c in r:
-            if c == ' X ':
-                count_r1 += 1
-    
-    for r in matrix[2]:
-        for c in r:
-            if c == ' X ':
-                count_r2 += 1
+    for c in matrix[0]:
+        if c == ' X ':
+            countX_r0 += 1
+        elif c == ' O ':
+            CountO_r0 += 1
 
-    if count_r0 == 3 or count_r1 == 3 or count_r2 == 3:
-        win = True
-        print(f'wr0 = {count_r0}\nwr1 = {count_r1}\nwr2 = {count_r2}')
-    return win
+    for c in matrix[1]:
+        if c == ' X ':
+            count_r1 += 1
+        elif c == ' O ':
+            countO_r1 += 1
+    
+    for c in matrix[2]:
+        if c == ' X ':
+            count_r2 += 1
+        elif c == ' O ':
+            countO_r2 += 1
+
+    if countX_r0 == 3 or countX_r1 == 3 or countX_r2 == 3:
+        win = 'win'
+        return win
+    elif countX_r0 == 3 or countX_r1 == 3 or countX_r2 == 3:
+        lose = 'lose'
+        return lose
+
 
 def win(matrix):
-    win = False
-    if winner_diagonal(matrix) == True or winner_colum(matrix) == True or winner_row(matrix) == True:
+    if winner_diagonal(matrix) == 'win' or winner_colum(matrix) == 'win' or winner_row(matrix) == 'win':
         win = True
         show_matrix(matrix)
         print('Parabéns! Você é o vencedor!')
-    return win
+        return win
+    
+    elif winner_diagonal(matrix) == 'lose' or winner_colum(matrix) == 'lose' or winner_row(matrix) == 'lose':
+        lose = True
+        show_matrix(matrix)
+        print('Que pena, você perdeu...')
+        return lose
 
 
 # para o pc
@@ -80,67 +124,6 @@ def cpu_mov():
     r = random.choice(range(3))
     c = random.choice(range(3))
     return r, c
-
-def loser_diagonal(matrix):
-    lose = False
-    if matrix[0][0] == ' O ' and matrix[1][1] == ' O ' and matrix[2][2] == ' O ':
-        lose = True
-        print('d1')
-        
-    if matrix[0][2] == ' O ' and matrix[1][1] == ' O ' and matrix[2][0] == ' O ':
-        lose = True
-        print('d2')   
-    return lose
-
-def loser_colum(matrix):
-    lose = False
-    if matrix[0][0] == ' O ' and matrix[1][0] == ' O ' and matrix[2][0] == ' O ':
-        lose = True
-        print(f'c1')
-    
-    if matrix[0][1] == ' O ' and matrix[1][1] == ' O ' and matrix[2][1] == ' O ':
-        lose = True
-        print('c2')
-        
-    if matrix[0][2] == ' O ' and matrix[1][2] == ' O ' and matrix[2][2] == ' O ':
-        lose = True
-        print('c3')
-    return lose
-
-def loser_row(matrix):
-    lose = False
-    count_r0 = 0
-    count_r1 = 0
-    count_r2 = 0
-    
-    for r in matrix[0]:
-        for c in r:
-            if c == ' O ':
-                count_r0 += 1
-    
-    for r in matrix[1]:
-        for c in r:
-            if c == ' O ':
-                count_r1 += 1
-    
-    for r in matrix[2]:
-        for c in r:
-            if c == ' O ':
-                count_r2 += 1
-
-    if count_r0 == 3 or count_r1 == 3 or count_r2 == 3:
-        lose = True
-        print(f'\nlr0 = {count_r0}\nlr1 = {count_r1}\nlr2 = {count_r2}')
-    return lose
-
-def lose(matrix):
-    lose = False
-    if loser_diagonal(matrix) == True or loser_colum(matrix) == True or loser_row(matrix) == True:
-        lose = True
-        show_matrix(matrix)
-        print(f'Que pena... Tente novamente!')
-    return lose
-
 
 # empate
 def counter(matrix):
@@ -189,27 +172,24 @@ def get_mov_valid():
 #  preenchimento
 def fill_matrix(matrix, play, player, r, c):
     matrix[r][c] = play[player]
-
-def player_play(matrix, play, player):
-    r, c = get_mov_valid()
-    if is_mov_valid(matrix, r, c):
-        try:
-            fill_matrix(matrix, play, player, r, c)
-        except:    
-            r, c = get_mov_valid()
-            fill_matrix(matrix, play, player, r, c)
-            pass
     
 # jogo
 def play_game():
     player = 0
     play = [' X ', ' O ']
     matrix = build_game()
-    while draw_match(matrix) == False and not win(matrix) and not lose(matrix):
+    while not draw_match(matrix) and not win(matrix):
         show_matrix(matrix)
         if player % 2 == 0:
-            player_play(matrix, play, player)
-            player = (player+1) % 2
+            r, c = get_mov_valid()
+            if is_mov_valid(matrix, r, c):
+                try:
+                    fill_matrix(matrix, play, player, r, c)
+                    player = (player+1) % 2
+                except:    
+                    r, c = get_mov_valid()
+                    fill_matrix(matrix, play, player, r, c)
+                    pass
         else:
             r, c = cpu_mov()
             if is_mov_valid(matrix, r, c):
