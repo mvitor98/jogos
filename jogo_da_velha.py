@@ -180,7 +180,7 @@ def get_mov_valid():
             r = int(input('Digite um número entre 1 e 3. '))
     try:
         c = int(input('Em qual coluna quer jogar? '))
-    except:
+    except ValueError:
         c = int(input('Digite um número válido. '))
         while c > 3 or c < 1:
             c = int(input('Digite um número entre 1 e 3. '))
