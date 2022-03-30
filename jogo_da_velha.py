@@ -1,5 +1,6 @@
 import random
 from time import sleep
+import os
 
 def build_game():
     matrix = [['   ' for r in range(3)] for r in range(3)]
@@ -8,6 +9,7 @@ def build_game():
 def show_matrix(matrix):
     for r in matrix:
         print(r)
+
 
 # para o jogador
 def winner_diagonal(matrix):
@@ -71,6 +73,7 @@ def win(matrix):
         show_matrix(matrix)
         print('Parabéns! Você é o vencedor!')
     return win
+
 
 # para o pc
 def cpu_mov():
@@ -169,52 +172,59 @@ def is_mov_valid(matrix, r, c):
     return ok
 
 def get_mov_valid():
-    r = int(input('Em qual linha quer jogar? '))
-    while r < 1 or r > 3:
-        r = int(input('Digite um número entre 1 e 3. '))
-    c = int(input('Em qual coluna quer jogar? '))
-    while c > 3 or c < 1:
-        c = int(input('Digite um número entre 1 e 3. '))
+    try:
+        r = int(input('Em qual linha quer jogar? '))
+    except ValueError:
+        r = int(input('Digite um número válido. '))
+        while r < 1 or r > 3:
+            r = int(input('Digite um número entre 1 e 3. '))
+    try:
+        c = int(input('Em qual coluna quer jogar? '))
+    except:
+        c = int(input('Digite um número válido. '))
+        while c > 3 or c < 1:
+            c = int(input('Digite um número entre 1 e 3. '))
     return r - 1, c - 1
 
 #  preenchimento
-def fill_matrix(matrix, play, jogador, r, c):
-    matrix[r][c] = play[jogador]
+def fill_matrix(matrix, play, player, r, c):
+    matrix[r][c] = play[player]
 
-def player_play(matrix, play, jogador):
+def player_play(matrix, play, player):
     r, c = get_mov_valid()
     if is_mov_valid(matrix, r, c):
         try:
-            fill_matrix(matrix, play, jogador, r, c)
+            fill_matrix(matrix, play, player, r, c)
         except:    
             r, c = get_mov_valid()
-            fill_matrix(matrix, play, jogador, r, c)
+            fill_matrix(matrix, play, player, r, c)
             pass
     
 # jogo
 def play_game():
-    jogador = 0
+    player = 0
     play = [' X ', ' O ']
     matrix = build_game()
     while draw_match(matrix) == False and not win(matrix) and not lose(matrix):
         show_matrix(matrix)
-        if jogador % 2 == 0:
-            player_play(matrix, play, jogador)
-            jogador = (jogador+1) % 2
+        if player % 2 == 0:
+            player_play(matrix, play, player)
+            player = (player+1) % 2
         else:
             r, c = cpu_mov()
             if is_mov_valid(matrix, r, c):
                 try:
                     print('Jogando...')
                     sleep(0.7)
-                    fill_matrix(matrix, play, jogador, r, c)
-                    jogador = (jogador+1) % 2
+                    fill_matrix(matrix, play, player, r, c)
+                    player = (player+1) % 2
                 except:    
                     print('Jogando...')
                     sleep(0.7)
                     r, c = cpu_mov()
-                    fill_matrix(matrix, play, jogador, r, c)
+                    fill_matrix(matrix, play, player, r, c)
                     pass
+        os.system('cls')
 
 if __name__ == '__main__':
     play_game()
