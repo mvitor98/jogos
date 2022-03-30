@@ -73,7 +73,7 @@ def win(matrix):
     return win
 
 # para o pc
-def cpu_play():
+def cpu_mov():
     r = random.choice(range(3))
     c = random.choice(range(3))
     return r, c
@@ -181,6 +181,16 @@ def get_mov_valid():
 def fill_matrix(matrix, play, jogador, r, c):
     matrix[r][c] = play[jogador]
 
+def player_play(matrix, play, jogador):
+    r, c = get_mov_valid()
+    if is_mov_valid(matrix, r, c):
+        try:
+            fill_matrix(matrix, play, jogador, r, c)
+        except:    
+            r, c = get_mov_valid()
+            fill_matrix(matrix, play, jogador, r, c)
+            pass
+    
 # jogo
 def play_game():
     jogador = 0
@@ -189,18 +199,10 @@ def play_game():
     while draw_match(matrix) == False and not win(matrix) and not lose(matrix):
         show_matrix(matrix)
         if jogador % 2 == 0:
-            r, c = get_mov_valid()
-            if is_mov_valid(matrix, r, c):
-                try:
-                    fill_matrix(matrix, play, jogador, r, c)
-                    jogador = (jogador+1) % 2
-                except:    
-                    r, c = get_mov_valid()
-                    fill_matrix(matrix, play, jogador, r, c)
-                    pass
-
+            player_play(matrix, play, jogador)
+            jogador = (jogador+1) % 2
         else:
-            r, c = cpu_play()
+            r, c = cpu_mov()
             if is_mov_valid(matrix, r, c):
                 try:
                     print('Jogando...')
@@ -210,7 +212,7 @@ def play_game():
                 except:    
                     print('Jogando...')
                     sleep(0.7)
-                    r, c = cpu_play()
+                    r, c = cpu_mov()
                     fill_matrix(matrix, play, jogador, r, c)
                     pass
 
