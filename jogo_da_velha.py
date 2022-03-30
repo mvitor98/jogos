@@ -10,8 +10,6 @@ def show_matrix(matrix):
     for r in matrix:
         print(r)
 
-
-# para o jogador
 def winner_diagonal(matrix):
     win = None
     lose = None
@@ -78,32 +76,27 @@ def winner_row(matrix):
     countO_r1 = 0
     countX_r2 = 0
     countO_r2 = 0
-    
     for c in matrix[0]:
         if c == ' X ':
             countX_r0 += 1
         elif c == ' O ':
-            CountO_r0 += 1
-
+            countO_r0 += 1
     for c in matrix[1]:
         if c == ' X ':
-            count_r1 += 1
+            countX_r1 += 1
         elif c == ' O ':
             countO_r1 += 1
-    
     for c in matrix[2]:
         if c == ' X ':
-            count_r2 += 1
+            countX_r2 += 1
         elif c == ' O ':
             countO_r2 += 1
-
     if countX_r0 == 3 or countX_r1 == 3 or countX_r2 == 3:
         win = 'win'
         return win
     elif countO_r0 == 3 or countO_r1 == 3 or countO_r2 == 3:
         lose = 'lose'
         return lose
-
 
 def win(matrix):
     if winner_diagonal(matrix) == 'win' or winner_colum(matrix) == 'win' or winner_row(matrix) == 'win':
@@ -117,14 +110,11 @@ def win(matrix):
         show_matrix(matrix)
         print('Que pena, você perdeu...')
         return lose
-
-
 # para o pc
 def cpu_mov():
     r = random.choice(range(3))
     c = random.choice(range(3))
     return r, c
-
 # empate
 def counter(matrix):
     countX = 0
@@ -140,12 +130,11 @@ def counter(matrix):
 def draw_match(matrix):
     draw = False
     countX, countO = counter(matrix)
-    if (countX == 4 and countO == 4):
+    if (countX == 5 and countO == 4) or (countX == 4 and countO == 5) and not win(matrix):
         show_matrix(matrix)
         print('Jogo empatado!')
         draw = True
     return draw
-
 # validação do jogo
 def is_mov_valid(matrix, r, c):
     ok = True
@@ -168,13 +157,16 @@ def get_mov_valid():
         while c > 3 or c < 1:
             c = int(input('Digite um número entre 1 e 3. '))
     return r - 1, c - 1
-
 #  preenchimento
 def fill_matrix(matrix, play, player, r, c):
-    matrix[r][c] = play[player]
-    
+    matrix[r][c] = play[player]   
 # jogo
 def play_game():
+    os.system('cls')
+    sleep(0.5)
+    print(f'\nIniciando a partida...')
+    sleep(1.3)
+    os.system('cls')
     player = 0
     play = [' X ', ' O ']
     matrix = build_game()
